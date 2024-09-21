@@ -20,3 +20,5 @@ mongoose.connect("mongodb+srv://6nSAv3DNQi7hQn6K:6nSAv3DNQi7hQn6K@cluster0.iwchv
   .catch((error) => {
     console.error("Error connecting to DB:", error);
   });
+
+export default app;
