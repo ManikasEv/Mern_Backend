@@ -1,19 +1,20 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import Product from '../models/product.model.js'; 
-import cors from 'cors';
+import Product from '../models/product.model.js';  // Assuming your Product model is in this path
+import cors from 'cors'; // Import CORS
 
-const router = express.Router();
+const app = express();
 
-router.use(cors());
-router.use(express.json());
+app.use(cors()); // Enable CORS for all routes
+app.use(express.json());
 
-router.get('/', (req, res) => {
+// Your existing routes
+app.get('/', (req, res) => {
     res.send('Hello from Node API');
 });
 
 // Get all products
-router.get('/products', async (req, res) => {
+app.get('/api/products', async (req, res) => {
   try {
     const products = await Product.find({});
     res.status(200).json(products);
@@ -23,7 +24,7 @@ router.get('/products', async (req, res) => {
 });
 
 // Get a specific product by ID
-router.get('/products/:id', async (req, res) => {
+app.get('/api/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
@@ -34,7 +35,7 @@ router.get('/products/:id', async (req, res) => {
 });
 
 // Create a new product
-router.post('/products', async (req, res) => {
+app.post('/api/products', async (req, res) => {
   try {
     const product = await Product.create(req.body);
     res.status(200).json(product);
@@ -44,7 +45,7 @@ router.post('/products', async (req, res) => {
 });
 
 // Update a product
-router.put('/products/:id', async (req, res) => {
+app.put('/api/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
@@ -59,4 +60,18 @@ router.put('/products/:id', async (req, res) => {
   }
 });
 
-export default router;
+
+// Enable Mongoose debugging
+mongoose.set('debug', true);
+
+// Connect to MongoDB
+mongoose.connect("mongodb+srv://6nSAv3DNQi7hQn6K:6nSAv3DNQi7hQn6K@cluster0.iwchv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  .then(() => {
+    console.log("Connected to DB");
+    app.listen(3000, () => {
+      console.log('Server is running on port 3000');
+    });
+  })
+  .catch((error) => {
+    console.error("Error connecting to DB:", error);
+  });
