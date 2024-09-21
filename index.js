@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import Product from '../models/product.model.js'; // Adjust path as necessary
+import Product from './models/product.model.js'; // Adjust path as necessary
 import cors from 'cors';
 
 const app = express();
