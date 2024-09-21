@@ -5,7 +5,11 @@ import cors from 'cors';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://testdeploymern.netlify.app/', // Replace with your actual front-end domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+    allowedHeaders: ['Content-Type'], // Specify allowed headers
+}));
 app.use(express.json());
 
 // Your existing routes
