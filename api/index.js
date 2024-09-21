@@ -10,6 +10,9 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
     allowedHeaders: ['Content-Type'], // Specify allowed headers
 }));
+
+app.options('*', cors());
+
 app.use(express.json());
 
 // Your existing routes
